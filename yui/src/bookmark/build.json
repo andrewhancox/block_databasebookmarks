@@ -1,0 +1,10 @@
+{
+    "name": "moodle-block_databasebookmarks-bookmark",
+    "builds": {
+        "moodle-block_databasebookmarks-bookmark": {
+            "jsfiles": [
+                "bookmark.js"
+            ]
+        }
+    }
+}

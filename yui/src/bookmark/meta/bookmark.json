@@ -1,0 +1,8 @@
+{
+    "moodle-block_databasebookmarks-bookmark": {
+        "requires": [
+            "node",
+            "json"
+        ]
+    }
+}
