@@ -38,14 +38,15 @@ require_sesskey();
 
 switch ($action) {
     case 'create':
-        $rid  = required_param('rid', PARAM_ALPHANUMEXT);
-        block_databasebookmarks\lib::createbookmark($rid);
+        $rid  = required_param('rid', PARAM_INT);
+        $bookmarkname  = required_param('bookmarkname', PARAM_ALPHANUMEXT);
+        block_databasebookmarks\lib::createbookmark($rid, $bookmarkname);
         $bookmarks = \block_databasebookmarks\lib::getbookmarks();
         $renderer = $PAGE->get_renderer('block_databasebookmarks');
         echo $renderer->render_databasebookmarks($bookmarks);
         break;
     case 'delete':
-        $rid  = required_param('rid', PARAM_ALPHANUMEXT);
+        $rid  = required_param('rid', PARAM_INT);
         block_databasebookmarks\lib::deletebookmark($rid);
         $bookmarks = \block_databasebookmarks\lib::getbookmarks();
         $renderer = $PAGE->get_renderer('block_databasebookmarks');

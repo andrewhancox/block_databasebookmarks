@@ -55,7 +55,8 @@ class block_databasebookmarks extends block_base {
         global $PAGE;
 
         $PAGE->requires->yui_module('moodle-block_databasebookmarks-bookmark', 'M.block_databasebookmarks.bookmark.init');
-        $PAGE->requires->strings_for_js(array('deletebookmark', 'bookmark'), 'block_databasebookmarks');
+        $PAGE->requires->strings_for_js(array('deletebookmark', 'bookmark', 'bookmarkname', 'bookmarkheader'), 'block_databasebookmarks');
+        $PAGE->requires->strings_for_js(array('buttons'), 'mod_data');
         return parent::get_required_javascript();
     }
 

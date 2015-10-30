@@ -36,7 +36,7 @@ class block_databasebookmarks_renderer extends plugin_renderer_base {
                 "/mod/data/view.php",
                 array('d' => $bookmark->instanceid, 'rid' => $bookmark->recordid)
             );
-            $label = $bookmark->recordid;
+            $label = $bookmark->bookmarkname;
             $bookmarklink = html_writer::link($url, $label);
             $bookmarkmarkup .= html_writer::span($bookmarklink, 'bookmarklink');
 

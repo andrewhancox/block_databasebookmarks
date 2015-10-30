@@ -43,23 +43,26 @@ class lib {
     public static function getbookmarks() {
         global $USER, $DB;
 
-        $sql = "SELECT bm.datarecordid AS recordid, d.id AS instanceid
-                FROM mdl_block_databasebookmarks bm
-                INNER JOIN mdl_data_records dr on bm.datarecordid = dr.id
-                INNER JOIN mdl_data d on d.id = dr.dataid
-                INNER JOIN mdl_course_modules cm on cm.instance = d.id
-                INNER JOIN mdl_modules m on m.id = cm.module
-                INNER JOIN mdl_course c on c.id = cm.course
+        $sql = "SELECT bm.datarecordid AS recordid, d.id AS instanceid, cm.id as cmid, c.id as courseid, bm.bookmarkname as bookmarkname
+                FROM {block_databasebookmarks} bm
+                INNER JOIN {data_records} dr on bm.datarecordid = dr.id
+                INNER JOIN {data} d on d.id = dr.dataid
+                INNER JOIN {course_modules} cm on cm.instance = d.id
+                INNER JOIN {modules} m on m.id = cm.module
+                INNER JOIN {course} c on c.id = cm.course
                 WHERE dr.approved = 1 AND m.name = 'data' AND m.visible = true AND c.visible = true AND bm.userid = :userid";
 
-        return $DB->get_records_sql($sql, array('userid' => $USER->id));
+        $bookmarks = $DB->get_records_sql($sql, array('userid' => $USER->id));
+
+        return $bookmarks;
     }
 
-    public static function createbookmark($rid) {
+    public static function createbookmark($rid, $bookmarkname) {
         global $USER, $DB;
         $bookmark = new \stdClass();
         $bookmark->userid = $USER->id;
         $bookmark->datarecordid = $rid;
+        $bookmark->bookmarkname = $bookmarkname;
 
         $DB->insert_record('block_databasebookmarks', $bookmark);
     }

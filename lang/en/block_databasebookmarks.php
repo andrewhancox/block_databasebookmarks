@@ -26,3 +26,5 @@ $string['databasebookmarks:myaddinstance'] = 'Add a new database bookmarks block
 $string['databasebookmarks:addinstance'] = 'Add a new database bookmarks summary block';
 $string['bookmark'] = 'Bookmark';
 $string['deletebookmark'] = 'Delete Bookmark';
+$string['bookmarkname'] = 'Bookmark name';
+$string['bookmarkheader'] = 'Create a bookmark';
