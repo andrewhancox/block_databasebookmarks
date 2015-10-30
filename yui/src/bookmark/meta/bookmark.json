@@ -2,7 +2,8 @@
     "moodle-block_databasebookmarks-bookmark": {
         "requires": [
             "node",
-            "json"
+            "json",
+            "moodle-core-notification-confirm"
         ]
     }
 }
