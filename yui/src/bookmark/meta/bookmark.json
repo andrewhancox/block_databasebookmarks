@@ -3,7 +3,8 @@
         "requires": [
             "node",
             "json",
-            "moodle-core-notification-confirm"
+            "moodle-core-notification-confirm",
+            "io"
         ]
     }
 }

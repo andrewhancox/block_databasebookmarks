@@ -139,4 +139,4 @@ M.block_databasebookmarks.bookmark = {
     }
 };
 
-}, '@VERSION@', {"requires": ["node", "json", "moodle-core-notification-confirm"]});
+}, '@VERSION@', {"requires": ["node", "json", "moodle-core-notification-confirm", "io"]});
