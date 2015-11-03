@@ -51,7 +51,7 @@ M.block_databasebookmarks.bookmark = {
     init: function() {
         Y.all('.data_bookmark_link').each(function() {
             var moreurl = this.getAttribute('data-moreurl');
-            var recordid = moreurl.match(/rid=([0-9])/i)[1];
+            var recordid = moreurl.match(/rid=([0-9]+)/i)[1];
             this.setAttribute('data-rid', recordid);
             this.setAttribute('data-action', 'create');
         });
