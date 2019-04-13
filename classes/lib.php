@@ -43,7 +43,7 @@ class lib {
     public static function getbookmarks() {
         global $USER, $DB;
 
-        $sql = "SELECT bm.datarecordid AS recordid, d.id AS instanceid, cm.id as cmid, c.id as courseid, bm.bookmarkname as bookmarkname
+        $sql = "SELECT bm.id, bm.datarecordid AS recordid, d.id AS instanceid, cm.id as cmid, c.id as courseid, bm.bookmarkname as bookmarkname
                 FROM {block_databasebookmarks} bm
                 INNER JOIN {data_records} dr on bm.datarecordid = dr.id
                 INNER JOIN {data} d on d.id = dr.dataid

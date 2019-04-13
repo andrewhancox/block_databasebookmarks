@@ -32,6 +32,7 @@ require('../../config.php');
 $action  = required_param('action', PARAM_ALPHANUMEXT);
 
 $PAGE->set_url(new moodle_url('/blocks/databasebookmarks/ajax.php', array('action'=>$action)));
+$PAGE->set_context(context_system::instance());
 
 require_login();
 require_sesskey();
@@ -39,7 +40,7 @@ require_sesskey();
 switch ($action) {
     case 'create':
         $rid  = required_param('rid', PARAM_INT);
-        $bookmarkname  = required_param('bookmarkname', PARAM_ALPHANUMEXT);
+        $bookmarkname  = required_param('bookmarkname', PARAM_TEXT);
         block_databasebookmarks\lib::createbookmark($rid, $bookmarkname);
         $bookmarks = \block_databasebookmarks\lib::getbookmarks();
         $renderer = $PAGE->get_renderer('block_databasebookmarks');

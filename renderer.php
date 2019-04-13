@@ -40,10 +40,8 @@ class block_databasebookmarks_renderer extends plugin_renderer_base {
             $bookmarklink = html_writer::link($url, $label);
             $bookmarkmarkup .= html_writer::span($bookmarklink, 'bookmarklink');
 
-            $iconenrolremove = $this->output->pix_url('t/delete');
-            $iconimg = html_writer::img($iconenrolremove, get_string('delete'));
-            $deletelink = html_writer::link('#', $iconimg, array('data-rid' => $bookmark->recordid, 'data-action' => 'delete', 'class' => 'data_deletebookmark_link'));
-            $bookmarkmarkup .= html_writer::span($deletelink, 'deletelink');
+            $bookmarkmarkup .= $this->output->action_icon('#', new pix_icon('t/delete', get_string('delete')), null,
+                    ['data-rid' => $bookmark->recordid, 'data-action' => 'delete', 'class' => 'data_deletebookmark_link']);
 
             $bookmarkslinks[] = $bookmarkmarkup;
         }
