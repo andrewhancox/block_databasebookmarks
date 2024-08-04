@@ -23,28 +23,29 @@
 
 M.block_databasebookmarks = M.block_databasebookmarks || {};
 M.block_databasebookmarks.bookmark = {
-    updateallbookmarklinks: function () {
+    updateallbookmarklinks: function() {
         Y.io(M.cfg.wwwroot + '/blocks/databasebookmarks/ajax.php', {
             method: 'POST',
             data: 'action=getids&sesskey=' + M.cfg.sesskey,
             on: {
-                complete: function (tid, response) {
-                    data = Y.JSON.parse(response.responseText);
-                    for (i = 0; i < data.length; i++) {
+                complete: function(tid, response) {
+                    var data = Y.JSON.parse(response.responseText);
+                    for (var i = 0; i < data.length; i++) {
                         var rid = data[i];
-                        Y.all('.data_bookmark_link[data-rid="' + rid + '"]').set('text', M.util.get_string('deletebookmark', 'block_databasebookmarks'));
+                        Y.all('.data_bookmark_link[data-rid="' + rid + '"]')
+                            .set('text', M.util.get_string('deletebookmark', 'block_databasebookmarks'));
                         Y.all('.data_bookmark_link[data-rid="' + rid + '"]').setAttribute('data-action', 'delete');
                     }
                 }
             }
         });
     },
-    addbookmarktoavailabletags: function () {
+    addbookmarktoavailabletags: function() {
         var actionsgrouplabel = M.util.get_string('buttons', 'mod_data');
         var actionsoptgroup = Y.one('select#availabletags optgroup[label="' + actionsgrouplabel + '"]');
 
         if (actionsoptgroup) {
-            var label = M.util.get_string('bookmark', 'block_databasebookmarks')
+            var label = M.util.get_string('bookmark', 'block_databasebookmarks');
             actionsoptgroup.append('<option value="##bookmark##">' + label + ' ##bookmark##</span>');
         }
     },
@@ -58,25 +59,27 @@ M.block_databasebookmarks.bookmark = {
         this.updateallbookmarklinks();
         this.addbookmarktoavailabletags();
 
-        Y.one('body').delegate('click', M.block_databasebookmarks.bookmark.handlebookmark, '.data_bookmark_link, .data_deletebookmark_link');
+        Y.one('body')
+            .delegate('click', M.block_databasebookmarks.bookmark.handlebookmark, '.data_bookmark_link, .data_deletebookmark_link');
     },
-    deletedialog: function (rid) {
+    deletedialog: function(rid) {
         var deletestring = M.util.get_string('deletebookmark', 'block_databasebookmarks');
-        confirmation = {
+        var confirmation = {
             modal: true,
             title: deletestring,
             question: deletestring
         };
-        dialog = new M.core.confirm(confirmation).on(
+        new M.core.confirm(confirmation).on(
             'complete-yes',
-            function (tid, response) {
-                Y.io(M.cfg.wwwroot+'/blocks/databasebookmarks/ajax.php', {
-                    method:'POST',
-                    data:'rid='+rid+'&action=delete&sesskey='+M.cfg.sesskey,
+            function() {
+                Y.io(M.cfg.wwwroot + '/blocks/databasebookmarks/ajax.php', {
+                    method: 'POST',
+                    data: 'rid=' + rid + '&action=delete&sesskey=' + M.cfg.sesskey,
                     on: {
                         complete: function(tid, response) {
                             Y.one('ul.block_databasebookmarks_bookmarklist').replace(response.responseText);
-                            Y.all('.data_bookmark_link[data-rid="' + rid + '"]').set('text', M.util.get_string('bookmark', 'block_databasebookmarks'));
+                            Y.all('.data_bookmark_link[data-rid="' + rid + '"]')
+                                .set('text', M.util.get_string('bookmark', 'block_databasebookmarks'));
                             Y.all('.data_bookmark_link[data-rid="' + rid + '"]').setAttribute('data-action', 'create');
                         }
                     }
@@ -90,7 +93,7 @@ M.block_databasebookmarks.bookmark = {
         var action = e.currentTarget.getAttribute('data-action');
 
         if (action == 'create') {
-            M.block_databasebookmarks.bookmark.createdialog(rid)
+            M.block_databasebookmarks.bookmark.createdialog(rid);
         } else {
             M.block_databasebookmarks.bookmark.deletedialog(rid);
         }
@@ -98,16 +101,20 @@ M.block_databasebookmarks.bookmark = {
     createdialog: function(rid) {
         var namelabel = M.util.get_string('bookmarkname', 'block_databasebookmarks');
         var title = M.util.get_string('bookmarkheader', 'block_databasebookmarks');
-        var bodyContent = '<form><label for="bookmarkname_' + rid + '">' + namelabel + '</label><input name="bookmarkname_' + rid + '" id="bookmarkname_' + rid + '"/><div><input type="submit" value ="' + title + '" id="btncreatebookmark_' + rid + '"/></div></form>';
+        var bodyContent = '<form>' +
+            '<label for="bookmarkname_' + rid + '">' + namelabel + '</label>' +
+            '<input name="bookmarkname_' + rid + '" id="bookmarkname_' + rid + '"/>' +
+            '<div><input type="submit" value ="' + title + '" id="btncreatebookmark_' + rid + '"/></div>' +
+            '</form>';
 
-        var dialog = new M.core.dialogue ({
+        var dialog = new M.core.dialogue({
             headerContent: title,
-            bodyContent  : bodyContent,
-            width        : 300,
-            zIndex       : 5,
-            centered     : true,
-            modal        : true,
-            render       : true
+            bodyContent: bodyContent,
+            width: 300,
+            zIndex: 5,
+            centered: true,
+            modal: true,
+            render: true
         });
         dialog.show();
 
@@ -121,13 +128,14 @@ M.block_databasebookmarks.bookmark = {
             e.preventDefault();
             var bookmarkname = Y.one(textselector).get('value');
 
-            Y.io(M.cfg.wwwroot+'/blocks/databasebookmarks/ajax.php', {
-                method:'POST',
-                data:'rid='+rid+'&action=create&sesskey='+M.cfg.sesskey+'&bookmarkname='+bookmarkname,
+            Y.io(M.cfg.wwwroot + '/blocks/databasebookmarks/ajax.php', {
+                method: 'POST',
+                data: 'rid=' + rid + '&action=create&sesskey=' + M.cfg.sesskey + '&bookmarkname=' + bookmarkname,
                 on: {
                     complete: function(tid, response) {
                         Y.one('ul.block_databasebookmarks_bookmarklist').replace(response.responseText);
-                        Y.all('.data_bookmark_link[data-rid="' + rid + '"]').set('text', M.util.get_string('deletebookmark', 'block_databasebookmarks'));
+                        Y.all('.data_bookmark_link[data-rid="' + rid + '"]')
+                            .set('text', M.util.get_string('deletebookmark', 'block_databasebookmarks'));
                         Y.all('.data_bookmark_link[data-rid="' + rid + '"]').setAttribute('data-action', 'delete');
                         dialog.destroy();
                     }

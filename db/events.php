@@ -15,18 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Main code for local plugin cohortthemes
- *
- * @package   local_cohortthemes
- * @copyright 2015 Andrew Hancox
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_databasebookmarks
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$observers = array(
-    array(
-        'eventname'   => '\mod_data\event\template_updated',
-        'callback'    => 'block_databasebookmarks\lib::handleplaceholders',
-    ),
-);
+$observers = [
+    [
+        'eventname' => '\mod_data\event\template_updated',
+        'callback' => 'block_databasebookmarks\lib::handleplaceholders',
+    ],
+];

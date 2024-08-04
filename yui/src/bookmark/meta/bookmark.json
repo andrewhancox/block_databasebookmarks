@@ -1,10 +1,10 @@
 {
-    "moodle-block_databasebookmarks-bookmark": {
-        "requires": [
-            "node",
-            "json",
-            "moodle-core-notification-confirm",
-            "io"
-        ]
-    }
+  "moodle-block_databasebookmarks-bookmark": {
+    "requires": [
+      "node",
+      "json",
+      "moodle-core-notification-confirm",
+      "io"
+    ]
+  }
 }

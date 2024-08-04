@@ -15,10 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    block_databasebookmarks
- * @subpackage tag
- * @copyright  2015 onwards Andrew Hancox (andrewdchancox@googlemail.com)
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_databasebookmarks
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
  */
 
 $string['pluginname'] = 'Database Bookmarks';
@@ -28,3 +30,4 @@ $string['bookmark'] = 'Bookmark';
 $string['deletebookmark'] = 'Delete Bookmark';
 $string['bookmarkname'] = 'Bookmark name';
 $string['bookmarkheader'] = 'Create a bookmark';
+$string['privacy:metadata'] = 'The Manual enrolments plugin does not store any personal data.';

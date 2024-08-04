@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Print private files tree
- *
- * @package    block_databaseboomkarks
- * @copyright  2010 Dongsheng Cai <dongsheng@moodle.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_databasebookmarks
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -28,24 +29,24 @@ class block_databasebookmarks_renderer extends plugin_renderer_base {
     public function render_databasebookmarks($bookmarks) {
         $output = '';
 
-        $bookmarkslinks = array();
+        $bookmarkslinks = [];
         foreach ($bookmarks as $bookmark) {
             $bookmarkmarkup = '';
 
             $url = new moodle_url(
                 "/mod/data/view.php",
-                array('d' => $bookmark->instanceid, 'rid' => $bookmark->recordid)
+                ['d' => $bookmark->instanceid, 'rid' => $bookmark->recordid]
             );
             $label = $bookmark->bookmarkname;
             $bookmarklink = html_writer::link($url, $label);
             $bookmarkmarkup .= html_writer::span($bookmarklink, 'bookmarklink');
 
             $bookmarkmarkup .= $this->output->action_icon('#', new pix_icon('t/delete', get_string('delete')), null,
-                    ['data-rid' => $bookmark->recordid, 'data-action' => 'delete', 'class' => 'data_deletebookmark_link']);
+                ['data-rid' => $bookmark->recordid, 'data-action' => 'delete', 'class' => 'data_deletebookmark_link']);
 
             $bookmarkslinks[] = $bookmarkmarkup;
         }
-        $output .= html_writer::alist($bookmarkslinks, array('class' => 'block_databasebookmarks_bookmarklist'));
+        $output .= html_writer::alist($bookmarkslinks, ['class' => 'block_databasebookmarks_bookmarklist']);
 
         return $output;
     }

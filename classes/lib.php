@@ -15,23 +15,28 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Main code for local plugin cohortthemes
- *
- * @package   local_cohortthemes
- * @copyright 2015 Andrew Hancox
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_databasebookmarks
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
  */
 
 namespace block_databasebookmarks;
 
+use html_writer;
+use mod_data\event\template_updated;
+use stdClass;
+
 class lib {
-    public static function handleplaceholders(\mod_data\event\template_updated $event) {
+    public static function handleplaceholders(template_updated $event) {
         global $DB;
         $dataid = $event->other['dataid'];
 
-        $data = $DB->get_record('data', array('id' => $dataid));
+        $data = $DB->get_record('data', ['id' => $dataid]);
 
-        $templates = array('singletemplate', 'listtemplate', 'asearchtemplate');
+        $templates = ['singletemplate', 'listtemplate', 'asearchtemplate'];
 
         foreach ($templates as $template) {
             $data->$template = self::replacebookmarkplaceholder($data->$template, $dataid);
@@ -52,14 +57,14 @@ class lib {
                 INNER JOIN {course} c on c.id = cm.course
                 WHERE dr.approved = 1 AND m.name = 'data' AND m.visible = true AND c.visible = true AND bm.userid = :userid";
 
-        $bookmarks = $DB->get_records_sql($sql, array('userid' => $USER->id));
+        $bookmarks = $DB->get_records_sql($sql, ['userid' => $USER->id]);
 
         return $bookmarks;
     }
 
     public static function createbookmark($rid, $bookmarkname) {
         global $USER, $DB;
-        $bookmark = new \stdClass();
+        $bookmark = new stdClass();
         $bookmark->userid = $USER->id;
         $bookmark->datarecordid = $rid;
         $bookmark->bookmarkname = $bookmarkname;
@@ -70,19 +75,19 @@ class lib {
     public static function deletebookmark($rid) {
         global $USER, $DB;
 
-        return $DB->delete_records('block_databasebookmarks', array('userid' => $USER->id, 'datarecordid' => $rid));
+        return $DB->delete_records('block_databasebookmarks', ['userid' => $USER->id, 'datarecordid' => $rid]);
     }
 
     private static function replacebookmarkplaceholder($template, $dataid) {
-        $bookmarklink = \html_writer::link(
+        $bookmarklink = html_writer::link(
             '#',
             get_string('bookmark', 'block_databasebookmarks'),
-            array(
+            [
                 'class' => 'data_bookmark_link',
-                'data-moreurl' => '##moreurl##'
-            )
+                'data-moreurl' => '##moreurl##',
+            ]
         );
-        $bookmarkspan = \html_writer::span($bookmarklink, 'data_bookmark_wrapper');
+        $bookmarkspan = html_writer::span($bookmarklink, 'data_bookmark_wrapper');
         $template = str_replace('##bookmark##', $bookmarkspan, $template);
         return $template;
     }

@@ -15,23 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file processes AJAX enrolment actions and returns JSON
- *
- * The general idea behind this file is that any errors should throw exceptions
- * which will be returned and acted upon by the calling AJAX script.
- *
- * @package    core_enrol
- * @copyright  2010 Sam Hemelryk
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package block_databasebookmarks
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
  */
+
+use block_databasebookmarks\lib;
 
 define('AJAX_SCRIPT', true);
 
 require('../../config.php');
 
-$action  = required_param('action', PARAM_ALPHANUMEXT);
+$action = required_param('action', PARAM_ALPHANUMEXT);
 
-$PAGE->set_url(new moodle_url('/blocks/databasebookmarks/ajax.php', array('action'=>$action)));
+$PAGE->set_url(new moodle_url('/blocks/databasebookmarks/ajax.php', ['action' => $action]));
 $PAGE->set_context(context_system::instance());
 
 require_login();
@@ -39,25 +39,24 @@ require_sesskey();
 
 switch ($action) {
     case 'create':
-        $rid  = required_param('rid', PARAM_INT);
-        $bookmarkname  = required_param('bookmarkname', PARAM_TEXT);
+        $rid = required_param('rid', PARAM_INT);
+        $bookmarkname = required_param('bookmarkname', PARAM_TEXT);
         block_databasebookmarks\lib::createbookmark($rid, $bookmarkname);
-        $bookmarks = \block_databasebookmarks\lib::getbookmarks();
+        $bookmarks = lib::getbookmarks();
         $renderer = $PAGE->get_renderer('block_databasebookmarks');
         echo $renderer->render_databasebookmarks($bookmarks);
         break;
     case 'delete':
-        $rid  = required_param('rid', PARAM_INT);
+        $rid = required_param('rid', PARAM_INT);
         block_databasebookmarks\lib::deletebookmark($rid);
-        $bookmarks = \block_databasebookmarks\lib::getbookmarks();
+        $bookmarks = lib::getbookmarks();
         $renderer = $PAGE->get_renderer('block_databasebookmarks');
         echo $renderer->render_databasebookmarks($bookmarks);
         break;
     case 'getids':
-        $bookmarks = \block_databasebookmarks\lib::getbookmarks();
+        $bookmarks = lib::getbookmarks();
         echo json_encode(array_keys($bookmarks));
         break;
 }
-
 
 die();

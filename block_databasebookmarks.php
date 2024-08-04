@@ -15,12 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * @package block_databasebookmarks
+ * @author Andrew Hancox <andrewdchancox@googlemail.com>
+ * @author Open Source Learning <enquiries@opensourcelearning.co.uk>
+ * @link https://opensourcelearning.co.uk
+ * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright 2024, Andrew Hancox
+ */
+
+use block_databasebookmarks\lib;
+
+/**
  * @package    block_databasebookmarks
  * @subpackage tag
  * @copyright  2015 onwards Andrew Hancox (andrewdchancox@googlemail.com)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 class block_databasebookmarks extends block_base {
     public function init() {
         $this->title = get_string('pluginname', 'block_databasebookmarks');
@@ -35,7 +45,7 @@ class block_databasebookmarks extends block_base {
     }
 
     public function applicable_formats() {
-        return array('all' => true);
+        return ['all' => true];
     }
 
     public function instance_allow_config() {
@@ -55,8 +65,8 @@ class block_databasebookmarks extends block_base {
         global $PAGE;
 
         $PAGE->requires->yui_module('moodle-block_databasebookmarks-bookmark', 'M.block_databasebookmarks.bookmark.init');
-        $PAGE->requires->strings_for_js(array('deletebookmark', 'bookmark', 'bookmarkname', 'bookmarkheader'), 'block_databasebookmarks');
-        $PAGE->requires->strings_for_js(array('buttons'), 'mod_data');
+        $PAGE->requires->strings_for_js(['deletebookmark', 'bookmark', 'bookmarkname', 'bookmarkheader'], 'block_databasebookmarks');
+        $PAGE->requires->strings_for_js(['buttons'], 'mod_data');
         parent::get_required_javascript();
     }
 
@@ -64,7 +74,7 @@ class block_databasebookmarks extends block_base {
         global $PAGE;
 
         $renderer = $PAGE->get_renderer('block_databasebookmarks');
-        $bookmarks = \block_databasebookmarks\lib::getbookmarks();
+        $bookmarks = lib::getbookmarks();
 
         $this->content = new stdClass;
         $this->content->text = $renderer->render_databasebookmarks($bookmarks);
